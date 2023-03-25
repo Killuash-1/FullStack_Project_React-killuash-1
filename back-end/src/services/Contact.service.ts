@@ -60,7 +60,6 @@ class ContactService {
     const contact = (await contactRepo.findOne({
       where: { id: id },
     })) as Contact;
-    console.log(contact);
     
     await contactRepo.delete({ id: contact.id });
     return;

@@ -10,14 +10,14 @@ export const contact = Router();
 contact.get(
   "/contacts/:id",
   UserVerifyMiddleware.tokenValidation,
-  ContactController.list
+  ContactController.list,
 );
 
 contact.post(
   "/contacts",
   YupVerification.text(YupSchema.contactSchema),
   ContactVerifiyMiddleware.authContact,
-  ContactController.storeContactInUser
+  ContactController.storeContactInUser,
 );
 
 contact.patch(

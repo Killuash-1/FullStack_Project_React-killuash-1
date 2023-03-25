@@ -33,7 +33,7 @@ class ContactVerifyMiddleware {
           user: { id },
         })) as Contact;
 
-        console.log(contact);
+       
 
         if (contact?.email) {
           throw new AppError("email already exists", 409);
@@ -70,7 +70,7 @@ class ContactVerifyMiddleware {
           user: {id}
         })) as Contact;
         const email = await contactRepo.exist({where: {email: body.email}}) ;
-        console.log(contact);
+     
 
         if (email) {
           throw new AppError("Email already exists", 409);

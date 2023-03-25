@@ -1,13 +1,11 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import AppDataSource from "../data-source";
 import { User } from "../entities/Users";
 import { IUserLogin, IUserRequest, IUserUpdate } from "../interfaces/Users";
 
 class Users {
-  
-
   async index() {
-    const  userRepo = AppDataSource.getRepository(User);
+    const userRepo = AppDataSource.getRepository(User);
     const users = await userRepo.find({
       select: ["id", "email", "created_at", "name", "contacts", "telephone"],
       relations: { contacts: true },
@@ -16,9 +14,13 @@ class Users {
   }
 
   async oneIndex(payload: string) {
-    const  userRepo = AppDataSource.getRepository(User);
+    const userRepo = AppDataSource.getRepository(User);
+    const token = payload?.split(" ")[1];
+
+    const { sub } = jwt.decode(token) as JwtPayload;
+
     const user = userRepo.find({
-      where: { id: payload },
+      where: { id: sub },
       select: ["id", "email", "created_at", "name", "contacts", "telephone"],
       relations: { contacts: true },
     });
@@ -27,7 +29,7 @@ class Users {
   }
 
   async create(payload: IUserRequest) {
-    const  userRepo = AppDataSource.getRepository(User);
+    const userRepo = AppDataSource.getRepository(User);
     const user = userRepo.create({
       ...payload,
     });
@@ -41,7 +43,7 @@ class Users {
   }
 
   async login({ email }: IUserLogin) {
-    const  userRepo = AppDataSource.getRepository(User);
+    const userRepo = AppDataSource.getRepository(User);
     const userEmail = (await userRepo.findOne({
       where: { email: email },
     })) as User;
@@ -55,7 +57,7 @@ class Users {
   }
 
   async update(id: any, body: IUserUpdate) {
-    const  userRepo = AppDataSource.getRepository(User);
+    const userRepo = AppDataSource.getRepository(User);
     const editUser = (await userRepo.findOneBy({ id: id })) as User;
     await userRepo.update(editUser.id, {
       ...body,
@@ -66,7 +68,7 @@ class Users {
   }
 
   async deleteUser(userId: string) {
-    const  userRepo = AppDataSource.getRepository(User);
+    const userRepo = AppDataSource.getRepository(User);
     const user = (await userRepo.findOne({
       where: { id: userId },
     })) as User;

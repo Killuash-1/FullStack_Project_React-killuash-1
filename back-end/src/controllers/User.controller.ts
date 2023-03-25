@@ -20,9 +20,9 @@ class UserController {
     return res.status(200).json(users);
   }
 
-  async getOne(req: Request, res: Response) {
-    const { id } = req.params;
-    const user = await UserService.oneIndex(id);
+  async getLogged(req: Request, res: Response) {
+    const auth = req.headers.authorization as string;
+    const user = await UserService.oneIndex(auth);
 
     return res.status(200).json(user);
   }

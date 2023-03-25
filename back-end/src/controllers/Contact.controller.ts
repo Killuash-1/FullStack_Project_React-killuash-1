@@ -26,7 +26,7 @@ class ContactController {
   async delete(req: Request, res: Response) {
     const id = req.params.id;
     await ContactService.delete(id);
-    console.log(id);
+
     
     return res.sendStatus(204);
   }

@@ -19,7 +19,7 @@ user.get(
   UserController.list
 );
 
-user.get("/users/:id",  UserVerifyMiddleware.tokenValidation,UserController.getOne);
+user.get("/profile",UserVerifyMiddleware.tokenValidation, UserController.getLogged);
 
 user.patch(
   "/users/:id",

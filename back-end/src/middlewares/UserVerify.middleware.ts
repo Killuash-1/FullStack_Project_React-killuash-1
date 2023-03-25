@@ -14,10 +14,10 @@ class UserVerify {
   async userExist(req: Request, res: Response, next: NextFunction) {
     const  userRepo = AppDataSource.getRepository(User);
     const user: IUserRequest = req.body;
-    console.log(user);
+  
     
     const userExists = await userRepo.findOneBy({email: user.email}) as User
-    console.log(userExists);
+ 
     
     if (userExists) {
       throw new AppError("User already exists", 409);
