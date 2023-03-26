@@ -9,6 +9,12 @@ class ContactController {
     return res.status(200).json(contacts);
   }
 
+  async listAll(req: Request, res: Response) {
+    const contacts = await ContactService.index();
+
+    return res.status(200).json(contacts);
+  }
+
   async storeContactInUser(req: Request, res: Response) {
     const contactCreated = await ContactService.createContact(req);
 

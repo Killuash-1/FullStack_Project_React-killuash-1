@@ -13,6 +13,12 @@ contact.get(
   ContactController.list,
 );
 
+contact.get(
+  "/contacts",
+  UserVerifyMiddleware.tokenValidation,
+  ContactController.listAll,
+);
+
 contact.post(
   "/contacts",
   YupVerification.text(YupSchema.contactSchema),

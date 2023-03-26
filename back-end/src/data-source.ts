@@ -21,17 +21,16 @@ const  setDataSourceConfig = (): DataSourceOptions => {
 
   return {
     type: 'postgres',
-    host: process.env.PGHOST,
-    port: parseInt(String(process.env.PGPORT)),
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    database: process.env.PGDATABASE,
+    host: process.env.DB_HOST,
+    port: parseInt(String(process.env.DB_PORT)),
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     logging: true,
     synchronize: false,
     entities: [path.join(__dirname, './entities/**.{js,ts}')],
     migrations: [path.join(__dirname, './migrations/**.{js,ts}')],
   }
-
 
 } 
 
