@@ -19,12 +19,10 @@ class Users {
 
     const { sub } = jwt.decode(token) as JwtPayload;
 
-    const user = userRepo.find({
-      where: { id: sub },
-      select: ["id", "email", "created_at", "name", "contacts", "telephone"],
-      relations: { contacts: true },
-    });
-
+    const user = userRepo.findOne({
+     where: {id: sub},
+     relations: {contacts: true}
+    })
     return user;
   }
 

@@ -69,7 +69,7 @@ class ContactVerifyMiddleware {
         const contact = (await contactRepo.findOneBy({
           user: {id}
         })) as Contact;
-        const email = await contactRepo.exist({where: {email: body.email}}) ;
+        const email = await contactRepo.exist({where: {email: body.email}});
      
 
         if (email) {

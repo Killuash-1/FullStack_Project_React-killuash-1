@@ -29,7 +29,7 @@ class User{
     @CreateDateColumn()
     created_at: Date
 
-    @OneToMany(() => Contact, (contact) => contact.user)
+    @OneToMany(() => Contact, (contact) => contact.user, {onDelete:"CASCADE", onUpdate: "CASCADE"})
     contacts: Contact[];
 }
 
