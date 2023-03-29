@@ -28,7 +28,7 @@ contact.post(
 
 contact.patch(
   "/contacts/:id",
-  YupVerification.text(YupSchema.contactSchema),
+  YupVerification.text(YupSchema.contactPatchSchema),
   ContactVerifiyMiddleware.authContactPatchDelete,
   ContactController.update,
 );

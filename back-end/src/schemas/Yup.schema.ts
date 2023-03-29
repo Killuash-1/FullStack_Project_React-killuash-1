@@ -14,6 +14,11 @@ class YupSchema {
     telephone: yup.string()
   })
 
+  contactPatchSchema = yup.object().shape({
+    email: yup.string().email().min(3),
+    name: yup.string(),
+    telephone: yup.string()
+  })
   loginSchema = yup.object().shape({
     email: yup.string().email().min(3).required(),
     password: yup.string().min(8).required(),
