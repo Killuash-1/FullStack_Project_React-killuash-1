@@ -10,7 +10,7 @@ class ContactVerifyMiddleware {
   async authContact(req: Request, res: Response, next: NextFunction) {
     const userRepo = AppDataSource.getRepository(User);
     const contactRepo = AppDataSource.getRepository(Contact);
-    
+    const email = req.body.email
 
     let token = req.headers.authorization;
 
@@ -28,9 +28,9 @@ class ContactVerifyMiddleware {
           throw new AppError(error.message, 401);
         }
         const id = decoded.sub as string
-        const user = await userRepo.findOneBy({ id });
+     
         const contact = (await contactRepo.findOneBy({
-          user: { id },
+          email:email
         })) as Contact;
 
        
@@ -45,7 +45,7 @@ class ContactVerifyMiddleware {
   }
 
   async authContactPatchDelete(req: Request, res: Response, next: NextFunction) {
-    const userRepo = AppDataSource.getRepository(User);
+    
     const contactRepo = AppDataSource.getRepository(Contact);
     const body = req.body as Icontacts
 
@@ -65,10 +65,8 @@ class ContactVerifyMiddleware {
           throw new AppError(error.message, 401);
         }
         const id = decoded.sub as string
-        const user = await userRepo.findOneBy({ id });
-        const contact = (await contactRepo.findOneBy({
-          user: {id}
-        })) as Contact;
+     
+        
         const email = await contactRepo.exist({where: {email: body.email}});
      
 
