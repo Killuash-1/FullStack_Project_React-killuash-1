@@ -26,6 +26,21 @@ class UserVerify {
     return next();
   }
 
+  async telephoneExist(req: Request, res: Response, next: NextFunction) {
+    const  userRepo = AppDataSource.getRepository(User);
+    const user: IUserRequest = req.body;
+  
+    
+    const telephoneExists = await userRepo.findOneBy({telephone: user.telephone}) as User
+ 
+    
+    if (telephoneExists) {
+      throw new AppError("telephone already exists", 409);
+    }
+
+    return next();
+  }
+
   async idVerification(req: Request, res: Response, next: NextFunction) {
     const  userRepo = AppDataSource.getRepository(User);
     const { id } = req.params;

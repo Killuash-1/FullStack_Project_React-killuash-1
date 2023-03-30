@@ -10,7 +10,8 @@ user.post(
   "/users",
   SerializerMiddleware.text(YupSchema.userSchema),
   UserVerifyMiddleware.userExist,
-  UserController.store
+  UserVerifyMiddleware.telephoneExist,
+  UserController.store,
 );
 
 user.get(
