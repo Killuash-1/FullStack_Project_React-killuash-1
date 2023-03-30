@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import {  SunIcon, MoonIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import CherryLogo from "../logotipo";
+import { useNavigate } from "react-router-dom";
 
 interface iHeader{
   isHomePage: boolean
@@ -15,7 +16,12 @@ interface iHeader{
 function Header({ isHomePage }:iHeader) {
   const { colorMode, toggleColorMode } = useColorMode();
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const nav = useNavigate()
+  const logout = () => {
+    localStorage.removeItem("token")
+    nav("/LandingPage")
 
+  }
   return (
     <Flex
       as="nav"
@@ -32,7 +38,7 @@ function Header({ isHomePage }:iHeader) {
           <IconButton
             aria-label="Logout Button"
             icon={<ArrowForwardIcon />}
-            // onClick={logout}
+            onClick={()=> logout()}
             variant="outline"
             mr={isMobile ? 0 : 4}
             mb={isMobile ? 4 : 0}
