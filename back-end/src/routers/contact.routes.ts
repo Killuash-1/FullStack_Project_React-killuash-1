@@ -39,6 +39,5 @@ contact.delete(
   "/contacts/:id",
   UserVerifyMiddleware.tokenValidation,
    ContactVerifiyMiddleware.verfiyId,
-   ContactVerifiyMiddleware.authContact,
   ContactController.delete,
 );
