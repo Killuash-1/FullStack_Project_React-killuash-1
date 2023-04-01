@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 class AppError extends Error {
   public readonly statusCode: number;
-  constructor(message: string, statusCode: number) {
+  constructor(message: any , statusCode: number) {
     super();
     this.message = message;
     this.statusCode = statusCode;
@@ -18,7 +18,7 @@ const errorHandler = (
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({ message: err.message });
   }
-  console.log(err.message);
+  console.log(err);
 
   return res.status(500).json({ message: "Internal Server Error." });
 };

@@ -7,47 +7,19 @@ import { User } from "../entities/Users";
 import { Icontacts } from "../interfaces/Contacts";
 
 class ContactVerifyMiddleware {
-  async authContact(req: Request, res: Response, next: NextFunction) {
-    const userRepo = AppDataSource.getRepository(User);
+  async verfiyId (req: Request, res: Response, next: NextFunction){
     const contactRepo = AppDataSource.getRepository(Contact);
-    const email = req.body.email
+    const id =req.params.id
+    const contact = (await contactRepo.exist({where:{id}}));
 
-    let token = req.headers.authorization;
+    if(!contact) throw new AppError("Invalid  id", 404);
 
-    if (!token) {
-      throw new AppError("Invalid token", 401);
-    }
-
-    token = token.split(" ")[1];
-
-    return jwt.verify(
-      token,
-      process.env.SECRET_KEY as string,
-      async (error, decoded: any) => {
-        if (error) {
-          throw new AppError(error.message, 401);
-        }
-        const id = decoded.sub as string
-     
-        const contact = (await contactRepo.findOneBy({
-          email:email
-        })) as Contact;
-
-       
-
-        if (contact?.email) {
-          throw new AppError("email already exists", 409);
-        }
-
-        return next();
-      }
-    );
+    return next()
   }
 
-  async authContactPatchDelete(req: Request, res: Response, next: NextFunction) {
-    
+  async authContact(req: Request, res: Response, next: NextFunction) {
     const contactRepo = AppDataSource.getRepository(Contact);
-    const body = req.body as Icontacts
+    const email = req.body.email;
 
     let token = req.headers.authorization;
 
@@ -64,13 +36,14 @@ class ContactVerifyMiddleware {
         if (error) {
           throw new AppError(error.message, 401);
         }
-        const id = decoded.sub as string
-     
-        
-        const email = await contactRepo.exist({where: {email: body.email}});
-     
 
-        if (email) {
+        const contact = (await contactRepo.findOneBy({
+          email: email,
+        })) as Contact;
+
+        
+
+        if (contact?.email) {
           throw new AppError("Email already exists", 409);
         }
 
@@ -78,6 +51,8 @@ class ContactVerifyMiddleware {
       }
     );
   }
+
+
 }
 
 export default new ContactVerifyMiddleware();

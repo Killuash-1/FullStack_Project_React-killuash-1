@@ -13,9 +13,9 @@ class YupVerification {
           abortEarly: false,
         });
         return next();
-      } catch (error) {
+      } catch (error: any) {
         if (error instanceof yup.ValidationError) {
-          throw new AppError(error.message, 400);
+          throw new AppError(error.errors, 400);
         }
       }
     };

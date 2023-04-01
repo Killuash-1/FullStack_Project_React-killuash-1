@@ -34,7 +34,7 @@ class ContactController {
     await ContactService.delete(id);
 
     
-    return res.sendStatus(204);
+    return res.sendStatus(204).json({});
   }
 
 }

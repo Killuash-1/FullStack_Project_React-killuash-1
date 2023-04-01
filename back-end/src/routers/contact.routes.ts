@@ -10,6 +10,7 @@ export const contact = Router();
 contact.get(
   "/contacts/:id",
   UserVerifyMiddleware.tokenValidation,
+  ContactVerifiyMiddleware.verfiyId,
   ContactController.list,
 );
 
@@ -29,12 +30,15 @@ contact.post(
 contact.patch(
   "/contacts/:id",
   YupVerification.text(YupSchema.contactPatchSchema),
-  ContactVerifiyMiddleware.authContactPatchDelete,
+  ContactVerifiyMiddleware.verfiyId,
+  ContactVerifiyMiddleware.authContact,
   ContactController.update,
 );
 
 contact.delete(
   "/contacts/:id",
   UserVerifyMiddleware.tokenValidation,
+   ContactVerifiyMiddleware.verfiyId,
+   ContactVerifiyMiddleware.authContact,
   ContactController.delete,
 );

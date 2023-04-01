@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import AppDataSource from "../data-source";
 import { User } from "../entities/Users";
 import { AppError } from "../errors/error";
-import { IUserRequest } from "../interfaces/Users";
+import { IUserLogin, IUserRequest } from "../interfaces/Users";
 
 
 class UserVerify {
@@ -25,6 +25,7 @@ class UserVerify {
 
     return next();
   }
+  
 
   async telephoneExist(req: Request, res: Response, next: NextFunction) {
     const  userRepo = AppDataSource.getRepository(User);
@@ -54,18 +55,28 @@ class UserVerify {
 
   async correctUser(req: Request, res: Response, next: NextFunction) {
     const  userRepo = AppDataSource.getRepository(User);
-    const { email, password } = req.body;
-
+    const { email, password }: IUserLogin = req.body;
+    
     const userEmail = (await userRepo.findOne({
       where: { email: email },
+      select:["password", "email"]
     })) as User;
-    const passMatch = await compare(password, userEmail.password as string);
 
-    if (!userEmail || !passMatch) {
+
+    if(userEmail){
+      const passMatch = await compare(password, userEmail.password );
+      if (!passMatch) {
+        throw new AppError("Incorrect Email or Password ", 403);
+      }
+    }
+
+      if ( !userEmail ) {
       throw new AppError("Incorrect Email or Password ", 403);
     }
     return next();
   }
+      
+   
 
   async tokenValidation(req: Request, res: Response, next: NextFunction) {
 

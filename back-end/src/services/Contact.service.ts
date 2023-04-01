@@ -11,7 +11,7 @@ class ContactService {
 
   async index() {
     const contactRepo = AppDataSource.getRepository(Contact);
-    const contactsList = contactRepo.find({
+    const contactsList = await contactRepo.find({
       relations: { user: true },
     });
 
@@ -20,12 +20,8 @@ class ContactService {
 
   async getContact(id: string) {
     const contactRepo = AppDataSource.getRepository(Contact);
-    const contactsList = await contactRepo.findOne({
-      where: { id: id },
-    });
-    if (!contactsList) {
-      throw new AppError("contact not found", 404);
-    }
+    const contactsList = await contactRepo.findOneBy({id});
+   
     return contactsList;
   }
 
