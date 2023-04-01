@@ -4,7 +4,7 @@
 
 # 📋 CherryCo
 
-- A aplicação está disponível em https://clie-cont.vercel.app/
+- A aplicação está disponível em full-stack-project-react-killuash-1-h94ne9yr0-killuash-1.vercel.app
 
 ## 🚀 Instruções para rodar o projeto
 
