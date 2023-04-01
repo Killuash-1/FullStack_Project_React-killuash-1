@@ -1,4 +1,4 @@
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Box,  Grid } from "@chakra-ui/react";
 import ContactsList from "../../components/ContactsCard";
 import Header from "../../components/header";
 
@@ -9,7 +9,7 @@ function HomePage() {
     <>
       <Header isHomePage />
       <Box p={8}>
-        <Grid templateColumns={{ base: "1fr", md: "1fr 2fr" }} gap={8}>
+        <Grid templateColumns={{ base: "1fr", md: "2fr" }} gap={8}>
           <UserCard />
           <ContactsList />
         </Grid>

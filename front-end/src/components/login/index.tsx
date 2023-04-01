@@ -1,6 +1,3 @@
-import * as yup from "yup";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
   Button,
@@ -13,11 +10,13 @@ import {
   Stack,
   useColorMode,
 } from "@chakra-ui/react";
-import { iYupformLogin, iYupformLoginErrors } from "../../interfaces/login";
-import { useContext } from "react";
 import { LoginUser } from "../../context/Login";
+import { useContext } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Customshadow } from "./style";
 import { LoginformSchema } from "../../schema/Users";
-
+import { useForm, Controller } from "react-hook-form";
+import { iYupformLogin, iYupformLoginErrors } from "../../interfaces/login";
 function Login() {
   const { colorMode } = useColorMode();
   const {
@@ -32,13 +31,15 @@ function Login() {
 
   const submit = (login: iYupformLogin) => {
     OnSubmitLogin(login);
+    console.log(login);
   };
 
   return (
     <Box
+      __css={Customshadow}
       maxWidth="400px"
       mx="auto"
-      bg={colorMode === "light" ? "#d8d3d3" : "#2a303d"}
+      bg={colorMode === "light" ? "-moz-initial" : "gray.800"}
       p={"4"}
       borderRadius={"8px"}
     >
@@ -56,11 +57,9 @@ function Login() {
               <FormControl isInvalid={!!errors.email} isRequired>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input {...field} placeholder="Digite seu email" />
-                {
-                  <FormErrorMessage>
-                    {errors.email && errors.email.message}
-                  </FormErrorMessage>
-                }
+                <FormErrorMessage>
+                  {errors.email && errors.email.message}
+                </FormErrorMessage>
               </FormControl>
             )}
           />

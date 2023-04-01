@@ -1,30 +1,21 @@
-import {
-  Flex,
-  Box,
-  Text,
-  useColorMode,
-  Heading,
-  Button,
-} from "@chakra-ui/react";
-import { useSpring, animated } from "react-spring";
+import { Flex} from "@chakra-ui/react";
 import Header from "../../components/header";
 import Login from "../../components/login";
 import SignUpForm from "../../components/SignUp";
 
-
 function LandingPage() {
-  const { colorMode } = useColorMode();
-
- 
+  
 
   return (
     <>
-      <Header isHomePage={false}/>
+      <Header isHomePage={false} />
       <Flex
+        direction={{base: "column", md: "row" }}
         justifyContent={"center"}
         alignItems={"center"}
         height={"100vh"}
         width={"100vw"}
+        gap={"25px"}
       >
         <Login />
         <SignUpForm />

@@ -1,26 +1,29 @@
-import Api from "../services";
-import { createContext, useContext } from "react";
+import {
+  PostContacts,
+  PatchContacts,
+  DeleteContacts,
+} from "../services/ContactRequests";
 import { iReactNode } from "../interfaces/context";
-import { iContactRegisterPatch } from "../interfaces/patch/patch";
-import { DeleteContacts, PatchContacts, PostContacts } from "../services/ContactRequests";
-import { iModalContextPatch } from "../interfaces/modal";
 import { Authorization } from "./Authorization";
-
+import { iModalContextPatch } from "../interfaces/modal";
+import { iContactRegisterPatch } from "../interfaces/patch/patch";
+import { createContext, useContext } from "react";
+import Api from "../services";
 
 export interface iContactContext {
   updateContact: (
     body: iContactRegisterPatch,
     patch: iModalContextPatch | undefined
   ) => Promise<void>;
-  postContact: (body: iContactRegisterPatch) => Promise<void>
-  deleteContact: (id: string) => Promise<void>
+  postContact: (body: iContactRegisterPatch) => Promise<void>;
+  deleteContact: (id: string) => Promise<void>;
 }
 
 export const ContactContext = createContext({} as iContactContext);
 
 function ContactRequest({ children }: iReactNode) {
   const { GetReload } = useContext(Authorization);
- 
+
   const postContact = async (body: iContactRegisterPatch) => {
     const token = localStorage.getItem("token");
     try {
@@ -48,21 +51,23 @@ function ContactRequest({ children }: iReactNode) {
     }
   };
 
-  const deleteContact = async (id:string)=> {
-    const token = localStorage.getItem("token")
+  const deleteContact = async (id: string) => {
+    const token = localStorage.getItem("token");
 
-    try{
-      Api.defaults.headers.authorization = `Bearer ${token}`
+    try {
+      Api.defaults.headers.authorization = `Bearer ${token}`;
 
-      await DeleteContacts(id)
-      await GetReload()
-    }catch(error){
-      console.error(error)
+      await DeleteContacts(id);
+      await GetReload();
+    } catch (error) {
+      console.error(error);
     }
-  }
+  };
 
   return (
-    <ContactContext.Provider value={{ postContact, updateContact, deleteContact }}>
+    <ContactContext.Provider
+      value={{ postContact, updateContact, deleteContact }}
+    >
       {children}
     </ContactContext.Provider>
   );

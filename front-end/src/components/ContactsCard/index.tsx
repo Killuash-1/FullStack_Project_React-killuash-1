@@ -1,4 +1,3 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Grid,
@@ -11,15 +10,14 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { useContext } from "react";
-
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { ModalContextManual } from "../../context/ModalContext";
 import ModalContact from "../ModalContact";
+import { useContext } from "react";
 import { Authorization } from "../../context/Authorization";
-import { iModalContextPatch } from "../../interfaces/modal";
-
 import { ContactContext } from "../../context/ContactsRequests";
+import { ModalContextManual } from "../../context/ModalContext";
+import { iModalContextPatch } from "../../interfaces/modal";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 interface iContactsCardProps {
   name: string;
@@ -29,18 +27,17 @@ interface iContactsCardProps {
 }
 
 export function ContactsCard({ name, email, phone, id }: iContactsCardProps) {
-  const { onOpen, setPatch,} = useContext(ModalContextManual);
-  const { deleteContact} = useContext(ContactContext);
+  const { onOpen, setPatch } = useContext(ModalContextManual);
+  const { deleteContact } = useContext(ContactContext);
+
   const getId = (id: iModalContextPatch) => {
     setPatch(id);
   };
 
-  const removecontact = async (id:iModalContextPatch) => {
-  
-   await deleteContact(id.id)
-  }
-  
-  
+  const removecontact = async (id: iModalContextPatch) => {
+    await deleteContact(id.id);
+  };
+
   return (
     <Box
       borderWidth="1px"
@@ -54,7 +51,7 @@ export function ContactsCard({ name, email, phone, id }: iContactsCardProps) {
       display={"flex"}
       justifyContent={"space-between"}
     >
-      <Box>
+      <Box boxSize={{ w: "60" }} w="60">
         <Heading size="md">{name}</Heading>
         <Text fontSize="sm" color="gray.500" mb={2}>
           {email}
@@ -67,6 +64,7 @@ export function ContactsCard({ name, email, phone, id }: iContactsCardProps) {
       <Box>
         <Menu>
           <MenuButton
+            height={{ base: 8, md: 10 }}
             as={IconButton}
             aria-label="Options"
             icon={<BsThreeDotsVertical />}
@@ -87,10 +85,6 @@ export function ContactsCard({ name, email, phone, id }: iContactsCardProps) {
     </Box>
   );
 }
-
-
-
-
 
 function ContactsList() {
   const { loading, users } = useContext(Authorization);
@@ -117,8 +111,8 @@ function ContactsList() {
         Lista de Contatos
       </Heading>
       <Grid
-        templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} 
-        gap={4} 
+        templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }}
+        gap={4}
       >
         {users?.contacts.map((contact) => {
           return (

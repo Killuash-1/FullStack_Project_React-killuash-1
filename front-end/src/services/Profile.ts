@@ -17,6 +17,5 @@ export interface iContactsProfile {
 
 export async function ProfileApi() {
   const { data } = await Api.get<iProfileApi>("/profile");
-
   return data;
 }

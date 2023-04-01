@@ -1,27 +1,19 @@
-import {
- 
-  Flex,
-  IconButton,
-  useColorMode,
-  useBreakpointValue,
- 
-} from "@chakra-ui/react";
-import {  SunIcon, MoonIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import CherryLogo from "../logotipo";
 import { useNavigate } from "react-router-dom";
+import { Flex, IconButton, useColorMode } from "@chakra-ui/react";
+import { SunIcon, MoonIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 
-interface iHeader{
-  isHomePage: boolean
+interface iHeader {
+  isHomePage: boolean;
 }
-function Header({ isHomePage }:iHeader) {
+function Header({ isHomePage }: iHeader) {
   const { colorMode, toggleColorMode } = useColorMode();
-  const isMobile = useBreakpointValue({ base: true, md: false });
-  const nav = useNavigate()
-  const logout = () => {
-    localStorage.removeItem("token")
-    nav("/LandingPage")
 
-  }
+  const nav = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("token");
+    nav("/", { replace: true });
+  };
   return (
     <Flex
       as="nav"
@@ -29,19 +21,21 @@ function Header({ isHomePage }:iHeader) {
       justify="space-between"
       wrap="wrap"
       padding="1rem"
-      bg="gray.800"
+      boxShadow="md"
+      bg={colorMode === "light" ? "whiteAlpha.900" : "gray.800"}
       color="white"
+      position={"-webkit-sticky"}
     >
       <CherryLogo />
-      <Flex alignItems="center">
+      <Flex gap="16px">
         {isHomePage && (
           <IconButton
             aria-label="Logout Button"
             icon={<ArrowForwardIcon />}
-            onClick={()=> logout()}
+            onClick={() => logout()}
             variant="outline"
-            mr={isMobile ? 0 : 4}
-            mb={isMobile ? 4 : 0}
+            mr={{ base: 0, md: 4 }}
+            mb={{ base: 4, md: 0 }}
           />
         )}
         <IconButton
@@ -49,8 +43,8 @@ function Header({ isHomePage }:iHeader) {
           icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
           variant="outline"
-          mr={isMobile ? 0 : 4}
-          mb={isMobile ? 4 : 0}
+          mr={{ base: 0, md: 4 }}
+          mb={{ base: 4, md: 0 }}
         />
       </Flex>
     </Flex>

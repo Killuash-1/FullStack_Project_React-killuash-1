@@ -1,20 +1,20 @@
 import { useToast } from "@chakra-ui/react";
+import { iYupForm } from "../interfaces/register";
+import { RegisterApi } from "../services/RegisterApi";
 import { createContext, useState } from "react";
 import { iOnSubmitObject, iReactNode } from "../interfaces/context";
-import { iYupForm } from "../interfaces/register";
-import { iRegisterApi, RegisterApi } from "../services/RegisterApi";
 
 export const RegisterUser = createContext({} as iOnSubmitObject);
 
 const RegisterClient = ({ children }: iReactNode) => {
-  const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
 
   const OnSubmitObject = async (data: iYupForm) => {
     try {
       setLoading(true);
       await RegisterApi(data);
-    
+
       setLoading(false);
       toast({
         title: "Cadastro realizado com sucesso!",

@@ -6,7 +6,7 @@ import SecureRoutes from "../components/SecureRoutes";
 const Browsing = () => {
   return (
     <Routes>
-      <Route path="/LandingPage" element={<LandingPage />}/>
+      <Route path="/" element={<LandingPage />}/>
       <Route element={<SecureRoutes/>}>
 
       <Route path="/HomePage" element={<HomePage/>}/>

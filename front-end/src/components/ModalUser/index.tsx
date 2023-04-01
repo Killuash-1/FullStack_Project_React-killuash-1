@@ -16,21 +16,21 @@ import {
   iYupContactForm,
   iYupContactFormErrors,
 } from "../../interfaces/register";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext, useRef, useState } from "react";
+import InputMask from "react-input-mask";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ContactContext } from "../../context/ContactsRequests";
+import { useContext, useRef } from "react";
 import { ModalContextManual } from "../../context/ModalContext";
 import { iContactRegisterPatch } from "../../interfaces/patch/patch";
 import { ContactPostformSchema } from "../../schema/Contacts";
 
 function ModalUser() {
-  const { isPost, onPost, postClose, } = useContext(ModalContextManual);
+  const { isPost, postClose } = useContext(ModalContextManual);
   const { postContact } = useContext(ContactContext);
-  
+
   const initialRefPost = useRef(null);
   const finalRefPost = useRef(null);
-
 
   const {
     register,
@@ -41,13 +41,12 @@ function ModalUser() {
     resolver: yupResolver(ContactPostformSchema),
   });
 
- 
   const submit = async (data: iContactRegisterPatch) => {
     await postContact(data);
-    
-    reset()
-   
-    postClose()
+
+    reset();
+
+    postClose();
     return;
   };
   return (
@@ -70,7 +69,6 @@ function ModalUser() {
                   {...register("name")}
                   id="name"
                   placeholder="Digite seu nome"
-                 
                 />
               </FormControl>
 
@@ -80,17 +78,17 @@ function ModalUser() {
                   {...register("email")}
                   id="email"
                   placeholder="Digite seu email"
-              
                 />
               </FormControl>
 
               <FormControl>
                 <FormLabel>Telefone</FormLabel>
                 <Input
+                  as={InputMask}
                   {...register("telephone")}
                   id="telephone"
                   placeholder="Digite seu Numero"
-               
+                  mask={"(99)99999-9999"}
                 />
               </FormControl>
             </ModalBody>

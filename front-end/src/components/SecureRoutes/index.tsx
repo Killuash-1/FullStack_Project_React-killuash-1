@@ -1,23 +1,22 @@
-import { useContext } from "react"
-import { Navigate, Outlet, useLocation } from "react-router-dom"
-import { Authorization } from "../../context/Authorization"
-
+import { useContext } from "react";
+import { Authorization } from "../../context/Authorization";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const SecureRoutes = () => {
-    const {users, direction} = useContext(Authorization)
+  const { users, direction } = useContext(Authorization);
 
-    const location = useLocation()
+  const location = useLocation();
+  console.log(users);
 
-    if(direction){
-        return null
-    }
+  if (direction) {
+    return null;
+  }
 
-    return users ? (
-        <Outlet/>
-    ):(
-        <Navigate to={'/LandingPage'} replace state={{from: location}}/>
-    )
+  return users ? (
+    <Outlet />
+  ) : (
+    <Navigate to={"/"} replace state={{ from: location }} />
+  );
+};
 
-}
-
-export default SecureRoutes
+export default SecureRoutes;

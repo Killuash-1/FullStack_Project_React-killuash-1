@@ -10,51 +10,48 @@ import {
   FormLabel,
   Input,
   Button,
+  Box,
 } from "@chakra-ui/react";
-import { ModalContextManual } from "../../context/ModalContext";
-import { useContext, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { ContactformSchema } from "../../schema/Contacts";
 import {
   iYupContactForm,
   iYupContactFormErrors,
 } from "../../interfaces/register";
-import { iContactRegisterPatch } from "../../interfaces/patch/patch";
+import InputMask from "react-input-mask";
+import { useContext } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
 import { ContactContext } from "../../context/ContactsRequests";
+import { ContactformSchema } from "../../schema/Contacts";
+import { ModalContextManual } from "../../context/ModalContext";
+import { iContactRegisterPatch } from "../../interfaces/patch/patch";
 
 function ModalContact() {
   const { isOpen, onClose, patch } = useContext(ModalContextManual);
   const { updateContact } = useContext(ContactContext);
- 
+
   const {
     handleSubmit,
     reset,
     control,
-    formState: { errors, isValid },
+    formState: {isValid },
   } = useForm<iYupContactForm, iYupContactFormErrors>({
     resolver: yupResolver(ContactformSchema),
   });
 
   const submit = async (data: iContactRegisterPatch) => {
     await updateContact(data, patch);
-    onClose()
-    reset()
+    onClose();
+    reset();
   };
-
- 
 
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Edite seu contato</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={handleSubmit(submit)}>
+          <Box as="form" onSubmit={handleSubmit(submit)}>
             <ModalBody pb={6}>
               <Controller
                 name="name"
@@ -63,7 +60,7 @@ function ModalContact() {
                 render={({ field }) => (
                   <FormControl>
                     <FormLabel>Nome Completo</FormLabel>
-                    <Input {...field}  placeholder={patch?.name} />
+                    <Input {...field} placeholder={patch?.name} />
                   </FormControl>
                 )}
               />
@@ -75,10 +72,7 @@ function ModalContact() {
                 render={({ field }) => (
                   <FormControl>
                     <FormLabel>Email</FormLabel>
-                    <Input
-                      {...field}
-                      placeholder={patch?.email}
-                    />
+                    <Input {...field} placeholder={patch?.email} />
                   </FormControl>
                 )}
               />
@@ -91,9 +85,10 @@ function ModalContact() {
                   <FormControl>
                     <FormLabel>Telefone</FormLabel>
                     <Input
+                      as={InputMask}
                       {...field}
-                      
                       placeholder={patch?.telephone}
+                      mask={"(99)99999-9999"}
                     />
                   </FormControl>
                 )}
@@ -102,11 +97,11 @@ function ModalContact() {
 
             <ModalFooter>
               <Button mr={3} type="submit" isDisabled={!isValid}>
-               Salvar
+                Salvar
               </Button>
               <Button onClick={onClose}>Cancelar</Button>
             </ModalFooter>
-          </form>
+          </Box>
         </ModalContent>
       </Modal>
     </>
