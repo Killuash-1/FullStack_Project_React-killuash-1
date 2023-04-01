@@ -19,11 +19,15 @@ function Authentication({ children }: iReactNode) {
   const [direction, setDirection] = useState<boolean>(true);
   const nav = useNavigate();
 
-  console.log(users);
-
+  const token = localStorage.getItem("token");
+  console.log(token);
+  const GetReload = async () => {
+    const data = await ProfileApi();
+    setUsers(data);
+  };
+  
   useEffect(() => {
     const fetchUsers = async () => {
-      const token = localStorage.getItem("token");
       if (token) {
         try {
           setDirection(true);
@@ -40,12 +44,8 @@ function Authentication({ children }: iReactNode) {
       setDirection(false);
     };
     fetchUsers();
-  }, []);
+  }, [ token ]);
 
-  const GetReload = async () => {
-    const data = await ProfileApi();
-    setUsers(data);
-  };
 
   return (
     <Authorization.Provider
