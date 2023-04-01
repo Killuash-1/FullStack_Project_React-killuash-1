@@ -31,7 +31,7 @@ function Login() {
 
   const submit = (login: iYupformLogin) => {
     OnSubmitLogin(login);
-    console.log(login);
+
   };
 
   return (

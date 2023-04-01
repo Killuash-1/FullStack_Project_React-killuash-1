@@ -6,7 +6,7 @@ const SecureRoutes = () => {
   const { users, direction } = useContext(Authorization);
 
   const location = useLocation();
-  console.log(users);
+ 
 
   if (direction) {
     return null;

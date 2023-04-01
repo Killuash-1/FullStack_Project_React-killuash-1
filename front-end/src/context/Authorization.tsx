@@ -20,7 +20,7 @@ function Authentication({ children }: iReactNode) {
   const nav = useNavigate();
 
   const token = localStorage.getItem("token");
-  console.log(token);
+
   const GetReload = async () => {
     const data = await ProfileApi();
     setUsers(data);
