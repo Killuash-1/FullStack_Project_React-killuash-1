@@ -24,7 +24,7 @@ function LoginClient({ children }: iReactNode) {
 
       setLoginLoad(false);
 
-      const navegateTo = location.state?.from?.pathname || "/HomePage";
+      const navegateTo = location.state?.from?.pathname || "HomePage";
       nav(navegateTo, { replace: true });
       toast({
         title: "Login realizado com sucesso!",
