@@ -23,15 +23,15 @@ contact.get(
 contact.post(
   "/contacts",
   YupVerification.text(YupSchema.contactSchema),
-  ContactVerifiyMiddleware.authContact,
+  UserVerifyMiddleware.tokenValidation,
   ContactController.storeContactInUser,
 );
 
 contact.patch(
   "/contacts/:id",
   YupVerification.text(YupSchema.contactPatchSchema),
+  UserVerifyMiddleware.tokenValidation,
   ContactVerifiyMiddleware.verfiyId,
-  ContactVerifiyMiddleware.authContact,
   ContactController.update,
 );
 
