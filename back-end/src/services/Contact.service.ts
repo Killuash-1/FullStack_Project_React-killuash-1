@@ -20,7 +20,7 @@ class ContactService {
 
   async getContact(id: string) {
     const contactRepo = AppDataSource.getRepository(Contact);
-    const contactsList = await contactRepo.findOneBy({id});
+    const contactsList = await contactRepo.findOne({where:{id}, select:["email", "name", "telephone"] });
    
     return contactsList;
   }

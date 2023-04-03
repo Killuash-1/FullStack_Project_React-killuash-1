@@ -15,7 +15,7 @@ class YupSchema {
   })
 
   contactPatchSchema = yup.object().shape({
-    email: yup.string().email().min(3),
+    email: yup.string().email(),
     name: yup.string(),
     telephone: yup.string()
   })

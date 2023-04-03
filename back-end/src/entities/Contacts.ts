@@ -11,16 +11,16 @@ class Contact{
     @Column({type: "text"})
     name: string;
 
-    @Column({unique: true})
+    @Column()
     email: string;
 
-    @Column({default: ""})
+    @Column()
     telephone: string;
 
     @CreateDateColumn()
     created_at: Date;
 
-    @ManyToOne(() => User, (user) => user.contacts, {onDelete:"CASCADE", onUpdate: "CASCADE"})
+    @ManyToOne(() => User, (user) => user.contacts, {onDelete:"CASCADE"})
     user: User;
 }
 
