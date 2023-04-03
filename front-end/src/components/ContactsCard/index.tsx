@@ -97,6 +97,7 @@ function ContactsList() {
     );
   }
 
+ 
   return (
     <Box
       maxW={"800px"}
@@ -106,7 +107,7 @@ function ContactsList() {
       borderRadius={"lg"}
       boxShadow={"md"}
       p={4}
-    >
+    > 
       <Heading size="lg" mb={4}>
         Lista de Contatos
       </Heading>
