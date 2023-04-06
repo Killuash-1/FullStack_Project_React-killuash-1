@@ -3,7 +3,8 @@ import ContactService from "../services/Contact.service";
 
 class ContactController {
   async list(req: Request, res: Response) {
-    const id = req.params.headers
+    const id = req
+    
     const contacts = await ContactService.getContact(id);
 
     return res.status(200).json(contacts);

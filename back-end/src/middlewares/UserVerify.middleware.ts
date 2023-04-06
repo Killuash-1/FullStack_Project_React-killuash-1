@@ -81,23 +81,24 @@ class UserVerify {
   async tokenValidation(req: Request, res: Response, next: NextFunction) {
 
     const { authorization } = req.headers;
-
-    if (!authorization) {
+    const token = authorization && authorization.split(" ")[1];
+    
+    if (!token) {
       throw new AppError("Missing token.", 401);
     }
 
-    const token = authorization.split(" ")[1];
-    jwt.verify(
-      token,
-      process.env.SECRET_KEY as string,
-      async (error, decoded) => {
-        if (error) {
-          return res.json(error.message);
-        }
+    jwt.verify(token, process.env.SECRET_KEY as string, async (error, decoded) => {
+      
+      if (error) {
+        return res.json(error.message);
       }
-    );
+      
+      req.user = decoded
+        next();
+    });
+    
 
-    return next();
+    
   }
 
   async verifyPatchBody(req: Request, res: Response, next: NextFunction) {

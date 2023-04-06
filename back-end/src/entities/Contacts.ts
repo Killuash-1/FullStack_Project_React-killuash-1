@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./Users";
 
 
@@ -21,7 +21,11 @@ class Contact{
     created_at: Date;
 
     @ManyToOne(() => User, (user) => user.contacts, {onDelete:"CASCADE"})
+    @JoinColumn({name:"userId"})
     user: User;
+
+    @Column()
+    userId: string;
 }
 
 export { Contact };

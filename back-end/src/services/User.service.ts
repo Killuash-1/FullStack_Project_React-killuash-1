@@ -42,11 +42,11 @@ class Users {
 
   async login({ email }: IUserLogin) {
     const userRepo = AppDataSource.getRepository(User);
-    const userEmail = (await userRepo.findOne({
+    const userEmail = await userRepo.findOne({
       where: { email: email },
-    })) as User;
+    }) as User;
 
-    const token = jwt.sign({ email }, process.env.SECRET_KEY as string, {
+    const token = jwt.sign({ email: userEmail.email, id: userEmail.id }, process.env.SECRET_KEY as string, {
       expiresIn: "120h",
       subject: userEmail?.id,
     });

@@ -7,8 +7,6 @@ import { Icontacts } from "../interfaces/Contacts";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 class ContactService {
-  
-
   async index() {
     const contactRepo = AppDataSource.getRepository(Contact);
     const contactsList = await contactRepo.find({
@@ -18,10 +16,21 @@ class ContactService {
     return contactsList;
   }
 
-  async getContact(id: string) {
+  async getContact(req: Request) {
     const contactRepo = AppDataSource.getRepository(Contact);
-    const contactsList = await contactRepo.findOne({where:{id}, select:["email", "name", "telephone"] });
-   
+
+    const id = req.params.id;
+    const userId = req.user.id;
+    console.log(userId);
+    
+    const contactsList = await contactRepo
+      .createQueryBuilder("contacts")
+      .where("contacts.id = :id AND contacts.userId = :userId", {
+        id,
+        userId,
+      })
+      .getOne();
+
     return contactsList;
   }
 
@@ -56,7 +65,7 @@ class ContactService {
     const contact = (await contactRepo.findOne({
       where: { id: id },
     })) as Contact;
-    
+
     await contactRepo.delete({ id: contact.id });
     return;
   }
